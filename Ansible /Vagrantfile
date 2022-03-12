@@ -1,0 +1,68 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+N = 2
+master_ip = "192.168.2.80"
+target_ip = Array.new(N) { |i| "192.168.2.8#{i+1}"}
+
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "ubuntu/focal64"
+  config.vm.box_version = "20220311.0.0"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  #==============#
+  # Worker Nodes #
+  #==============#
+  
+  (1..N).each do |i|
+    config.vm.define "target-#{i}" do |target|
+      target.vm.hostname = "target-#{i}"
+      target.vm.network "private_network", ip: target_ip[i-1]
+      target.vm.provider "virtualbox" do |vb|    
+        vb.name = "target-#{i}"
+        vb.cpus = 2          
+        vb.memory = "2048"   
+        vb.customize ["modifyvm", :id, "--groups", "/Ansible"]
+      end
+      target.vm.provision "shell", inline: $common_script
+    end
+  end
+
+  #=============#
+  # Master Node #
+  #=============#
+  
+  config.vm.define "controller" do |controller|
+    controller.vm.hostname = "controller"
+    controller.vm.network "private_network", ip: master_ip
+    controller.vm.network "public_network", bridge: "Realtek PCIe GbE Family Controller"
+    controller.vm.provider "virtualbox" do |vb|    
+      vb.name = "controller" 
+      vb.cpus = 2       
+      vb.memory = "2048"
+      vb.customize ["modifyvm", :id, "--groups", "/Ansible"]
+    end
+    controller.vm.provision "file", source: "./playbook.yaml", destination: "~/playbook.yaml"
+    controller.vm.provision "file", source: "./inventory.txt", destination: "~/inventory.txt"
+    controller.vm.provision "shell", inline: $common_script
+    controller.vm.provision "shell", inline: $controller_script, privileged: false, args: N
+  end
+
+end
+
+$common_script = <<-SCRIPT
+apt update #&& apt upgrade -y && apt autoremove -y
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+systemctl restart ssh
+SCRIPT
+
+$controller_script = <<-SCRIPT
+sudo apt install -y ansible=2.9.6+dfsg-1
+sudo apt install -y sshpass
+ssh-keygen -f /home/vagrant/.ssh/id_rsa -N ''
+sudo sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config
+for ((i = 1; i <= $1; i++)); do sshpass -p vagrant ssh-copy-id "vagrant@192.168.2.8$i"; done
+curl -s https://raw.githubusercontent.com/ehsqjfwk99999/config-files/main/.bashrc >>/home/vagrant/.bashrc
+curl -s https://raw.githubusercontent.com/ehsqjfwk99999/config-files/main/.vimrc >>/home/vagrant/.vimrc
+SCRIPT

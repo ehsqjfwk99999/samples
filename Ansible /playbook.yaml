@@ -1,0 +1,23 @@
+---
+- name: Test Connection on Targets
+  hosts: all
+  tasks:
+    - name: Ping Test
+      ping:
+
+- name: Test Simple Commands
+  hosts: all
+  tasks:
+    - name: Test as user
+      shell: 'echo "whoami=$(whoami) home=$HOME"'
+      register: result
+    - name: Test result
+      debug:
+        msg: '{{result.stdout}}'
+    - name: Test command as root using `become`
+      shell: 'echo "whoami=$(whoami) home=$HOME"'
+      register: result
+      become: true
+    - name: Test result
+      debug:
+        msg: '{{result.stdout}}'
