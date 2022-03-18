@@ -53,7 +53,7 @@ end
 
 $common_script = <<-SCRIPT
 apt update #&& apt upgrade -y && apt autoremove -y
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 systemctl restart ssh
 SCRIPT
 
@@ -61,7 +61,7 @@ $controller_script = <<-SCRIPT
 sudo apt install -y ansible=2.9.6+dfsg-1
 sudo apt install -y sshpass
 ssh-keygen -f /home/vagrant/.ssh/id_rsa -N ''
-sudo sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/g' /etc/ssh/ssh_config
+sudo sed -i 's/#   StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/ssh_config
 for ((i = 1; i <= $1; i++)); do sshpass -p vagrant ssh-copy-id "vagrant@192.168.2.8$i"; done
 curl -s https://raw.githubusercontent.com/ehsqjfwk99999/config-files/main/.bashrc >>/home/vagrant/.bashrc
 curl -s https://raw.githubusercontent.com/ehsqjfwk99999/config-files/main/.vimrc >>/home/vagrant/.vimrc
