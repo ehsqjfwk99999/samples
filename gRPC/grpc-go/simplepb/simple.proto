@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package simplepb;
+option go_package = "./simplepb";
+
+message SimpleUnaryRequest {
+  int32 id = 1;
+  bool is_simple = 2;
+  string message = 3;
+}
+message SimpleUnaryResponse { string result = 1; }
+
+message SimpleServerStreamingRequest { int32 times = 1; }
+message SimpleServerStreamingResponse { int32 number = 1; }
+
+message SimpleClientStreamingRequest { int32 number = 1; }
+message SimpleClientStreamingResponse { string message = 1; }
+
+message SimpleBidirectionalStreamingRequest { int32 number = 1; }
+message SimpleBidirectionalStreamingResponse { int32 number = 1; }
+
+service SimpleService {
+  // Unary
+  rpc SimpleUnary(SimpleUnaryRequest) returns (SimpleUnaryResponse) {};
+
+  // Server Streaming
+  rpc SimpleServerStreaming(SimpleServerStreamingRequest)
+      returns (stream SimpleServerStreamingResponse) {};
+
+  // Client Streaming
+  rpc SimpleClientStreaming(stream SimpleClientStreamingRequest)
+      returns (SimpleClientStreamingResponse) {};
+
+  // Bidirectional Streaming
+  rpc SimpleBidirectionalStreaming(stream SimpleBidirectionalStreamingRequest)
+      returns (stream SimpleBidirectionalStreamingResponse) {};
+}
