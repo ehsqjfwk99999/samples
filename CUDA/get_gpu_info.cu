@@ -27,8 +27,14 @@ int main() {
     } else {
       printf("\nDevice: %d\n", i);
     }
-    printf("- Device name: %s\n", devProp.name);
+    printf("- Device Name: %s\n", devProp.name);
+    printf("- Compute Capability: %d.%d\n", devProp.major, devProp.minor);
+    printf("- Max Grid Size: (%d, %d, %d)\n", devProp.maxGridSize[0],
+           devProp.maxGridSize[1], devProp.maxGridSize[2]);
+    printf("- Max Block Size: (%d, %d, %d)\n", devProp.maxThreadsDim[0],
+           devProp.maxThreadsDim[1], devProp.maxThreadsDim[2]);
     printf("- Max Threads per Block: %d\n", devProp.maxThreadsPerBlock);
+    printf("- Warp Size: %d\n", devProp.warpSize);
   }
 
   printf("\n");
