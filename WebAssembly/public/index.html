@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simple WebAssembly</title>
+  </head>
+  <body>
+    <h1>Simple WebAssembly</h1>
+    <script src="./simple.js"></script>
+    <script>
+      const returnInt = () => {
+        return 123;
+      };
+      const returnString = () => {
+        return "'string from JS'";
+      };
+    </script>
+    <script>
+      Module['onRuntimeInitialized'] = () => {
+        console.log('Runtime Ready!');
+        console.log('==============');
+        ccall('ccallFunction');
+        console.log('===================');
+      };
+    </script>
+    <script></script>
+  </body>
+</html>
