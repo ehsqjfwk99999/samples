@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <style>
+      html { text-align: center; }
+    </style>
+    <title>Simple Twitter</title>
+  </head>
+  <body>
+    <h1>Simple Twitter Powered by NestJS</h1>
+
+    <a href='/'>Home</a>
+
+    <form method='POST'>
+      <h2>Write Some Tweets!</h2>
+      <input
+        type='text'
+        name='name'
+        placeholder='Enter name'
+        required
+        autofocus
+      />
+      <br />
+      <br />
+      <textarea
+        name='content'
+        placeholder='Enter a new tweet'
+        required
+      ></textarea>
+      <br />
+      <div>
+        <button type='submit'>Submit</button>
+      </div>
+    </form>
+
+    <h2>{{title}}</h2>
+    {{#each allTweets}}
+      <div>({{tweet_id}})
+        {{name}}
+        -
+        {{content}}
+        <button
+          onclick="location.href='/twitter/edit/{{tweet_id}}';"
+        >Edit</button>
+        <button
+          onclick="location.href='/twitter/delete/{{tweet_id}}';"
+        >Delete</button></div>
+    {{/each}}
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <style>
+      html { text-align: center; }
+    </style>
+    <title>Simple Twitter</title>
+  </head>
+  <body>
+    <h1>Simple Twitter Powered by NestJS</h1>
+
+    <a href='/'>Home</a>
+
+    <form method='POST'>
+      <h2>Edit Tweet {{tweet_id}}</h2>
+      <textarea name='newContent' required>{{content}}</textarea>
+      <br />
+      <div>
+        <button type='submit'>Submit</button>
+      </div>
+    </form>
+  </body>
+</html>
