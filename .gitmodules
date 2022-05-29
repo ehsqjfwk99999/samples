@@ -1,6 +1,0 @@
-[submodule "AA"]
-	path = AA
-	url = git@github.com:ehsqjfwk99999/simple-airflow-cluster-docker-compose.git
-[submodule "BBBBB"]
-	path = BBBBB
-	url = https://github.com/ehsqjfwk99999/simple-zookeeper-cluster-docker-compose.git
