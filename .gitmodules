@@ -1,0 +1,3 @@
+[submodule "CoreDNS/simple-coredns-server"]
+	path = CoreDNS/simple-coredns-server
+	url = git@github.com:ehsqjfwk99999/simple-coredns-server.git
