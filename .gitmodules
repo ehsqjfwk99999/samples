@@ -1,3 +1,6 @@
 [submodule "CoreDNS/simple-coredns-server"]
 	path = CoreDNS/simple-coredns-server
 	url = git@github.com:ehsqjfwk99999/simple-coredns-server.git
+[submodule "Airflow/simple-airflow-cluster"]
+	path = Airflow/simple-airflow-cluster
+	url = git@github.com:ehsqjfwk99999/simple-airflow-cluster.git
