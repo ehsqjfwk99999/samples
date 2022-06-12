@@ -7,3 +7,9 @@
 [submodule "TDD/tdd-express-jest"]
 	path = TDD/tdd-express-jest
 	url = git@github.com:ehsqjfwk99999/tdd-express-jest.git
+[submodule "Envoy/simple-envoy"]
+	path = Envoy/simple-envoy
+	url = git@github.com:ehsqjfwk99999/simple-envoy.git
+[submodule "etcd/simple-etcd-cluster"]
+	path = etcd/simple-etcd-cluster
+	url = git@github.com:ehsqjfwk99999/simple-etcd-cluster.git
